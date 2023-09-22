@@ -3,6 +3,8 @@ import contactBook.ContactBook;
 
 import java.util.Scanner;
 
+import static java.util.Objects.isNull;
+
 
 public class Main {
     //Constantes que definem os comandos
@@ -14,6 +16,8 @@ public class Main {
     public static final String SET_EMAIL      = "SE";
     public static final String LIST_CONTACTS  = "LC";
     public static final String QUIT           = "Q";
+    public static final String LOOK_UP        = "GC";
+    public static final String REPEATED       = "EP";
 
     //Constantes que definem as mensagens para o utilizador
     public static final String CONTACT_EXISTS = "contactBook.Contact already exists.";
@@ -53,6 +57,12 @@ public class Main {
                 case LIST_CONTACTS:
                     listAllContacts(cBook);
                     break;
+                case REPEATED:
+                    getRepeatedPhones(cBook);
+                    break;
+                case LOOK_UP:
+                    lookUpPhone(in, cBook);
+                    break;
                 default:
                     System.out.println(COMMAND_ERROR);
             }
@@ -62,6 +72,26 @@ public class Main {
         System.out.println(QUIT_MSG);
         System.out.println();
         in.close();
+    }
+
+    private static void lookUpPhone(Scanner in, ContactBook cBook) {
+        int phone = in.nextInt();
+        String name = cBook.getName(phone);
+        if(isNull(name)){
+            System.out.println("Phone number does not exist.");
+        }
+        else{
+            System.out.println(name);
+        }
+    }
+
+    private static void getRepeatedPhones(ContactBook cBook) {
+        int repeated = cBook.getRepeatedPhones();
+        if (repeated == 0) {
+            System.out.println("All contacts have different phone numbers.");
+        } else {
+            System.out.printf("There are %d repeated phone numbers.\n");
+        }
     }
 
     private static String getCommand(Scanner in) {
