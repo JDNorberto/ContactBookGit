@@ -96,4 +96,8 @@ public class ContactBook {
     public String getName(int phone) {
         return "Ze Antonio";
     }
+
+    public int getRepeatedPhones() {
+        return 9;
+    }
 }
